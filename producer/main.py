@@ -3,6 +3,12 @@ import time
 from kafka import KafkaProducer
 import requests
 import json
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+KAFKA_HOST = os.getenv('KAFKA_HOST')
+KAKFA_TOPIC = os.getenv('KAFKA_TOPIC')
 
 def fetch_crypto_prices():
     # Replace 'your_coin_ids' with the actual coin IDs you want to fetch
@@ -23,7 +29,7 @@ def produce_to_kafka(producer, topic):
         time.sleep(5)  # Fetch data every 5 seconds
 
 def main():
-    kafka_bootstrap_servers = 'localhost:9092'
+    kafka_bootstrap_servers = KAFKA_HOST
     kafka_topic = 'crypto_prices'
     producer = KafkaProducer(bootstrap_servers=kafka_bootstrap_servers)
 
