@@ -1,10 +1,10 @@
 # producer.py
-import time
 from kafka import KafkaProducer
+from dotenv import load_dotenv
+import time
 import requests
 import json
 import os
-from dotenv import load_dotenv
 
 load_dotenv()
 KAFKA_HOST = os.getenv('KAFKA_HOST')
@@ -30,7 +30,7 @@ def produce_to_kafka(producer, topic):
 
 def main():
     kafka_bootstrap_servers = KAFKA_HOST
-    kafka_topic = 'crypto_prices'
+    kafka_topic = KAKFA_TOPIC
     producer = KafkaProducer(bootstrap_servers=kafka_bootstrap_servers)
 
     try:
