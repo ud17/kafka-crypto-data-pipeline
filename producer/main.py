@@ -6,15 +6,30 @@ import requests
 import json
 import os
 
+# loading env variables
 load_dotenv()
 KAFKA_HOST = os.getenv('KAFKA_HOST')
 KAKFA_TOPIC = os.getenv('KAFKA_TOPIC')
+API_KEY = os.getenv('API_KEY')
 
 def fetch_crypto_prices():
-    # Replace 'your_coin_ids' with the actual coin IDs you want to fetch
-    coin_ids = ['bitcoin', 'ethereum']
-    url = f'https://api.coingecko.com/api/v3/simple/price?ids={"%2C".join(coin_ids)}&vs_currencies=usd'
-    response = requests.get(url)
+    
+    payload = json.dumps({
+        "currency": "USD",
+        "sort": "rank",
+        "order": "ascending",
+        "offset": 0,
+        "limit": 10,
+        "meta": True
+    })
+
+    headers = {
+        'content-type': 'application/json',
+        'x-api-key': API_KEY
+    }
+
+    base_url = "https://api.livecoinwatch.com/coins/list"
+    response = requests.post(base_url, headers=headers, data=payload)
     return response.json()
 
 def produce_to_kafka(producer, topic):
@@ -22,11 +37,12 @@ def produce_to_kafka(producer, topic):
         print('START')
         crypto_prices = fetch_crypto_prices()
         # Serialize data to bytes (assuming it's JSON)
-        print('crypto_prices: ' + str(crypto_prices))
-        message_value = json.dumps(crypto_prices).encode('utf-8')
-        producer.send(topic, value=message_value)
+        for coin in crypto_prices:
+            print(coin.name)
+            message_value = json.dumps(coin).encode('utf-8')
+            producer.send(topic, value=message_value)
         print('END')
-        time.sleep(5)  # Fetch data every 5 seconds
+        time.sleep(10)  # Fetch data every 10 seconds
 
 def main():
     kafka_bootstrap_servers = KAFKA_HOST
