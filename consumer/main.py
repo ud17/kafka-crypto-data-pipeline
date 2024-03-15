@@ -1,8 +1,6 @@
 # consumer.py
 from kafka import KafkaConsumer
 from dotenv import load_dotenv
-import time
-import requests
 import json
 import os
 
