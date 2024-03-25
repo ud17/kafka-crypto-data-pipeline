@@ -47,7 +47,6 @@ def consume_and_store(consumer, cursor):
             'code': crypto['code'],
             'rank': crypto['rank'],
             'age': crypto['age'],
-            'png64': crypto['png64'],
             'exchanges': crypto['exchanges'],
             'markets': crypto['markets'],
             'allTimeHighUSD': crypto['allTimeHighUSD'],
@@ -56,14 +55,13 @@ def consume_and_store(consumer, cursor):
             'cap': crypto['cap'],
             'circulatingSupply': crypto['circulatingSupply'],
             'totalSupply': crypto['totalSupply'],
-            'maxSupply': crypto['maxSupply'],
-            'website': crypto['links']['website']
+            'maxSupply': crypto['maxSupply']
         }
 
         query = """
             INSERT INTO coin (name, code, rank, age, png64, exchanges, markets, allTimeHighUSD, rate, volume, cap, circulatingSupply, totalSupply, maxSupply, website)
             VALUES
-            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
 
         try:
