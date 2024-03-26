@@ -11,7 +11,7 @@ COPY .env /consumer/.env
 # Set the working dir
 WORKDIR /consumer
 
-RUN pip3 install --no-cache-dir -r /producer/lib.txt
+RUN pip3 install --no-cache-dir -r /consumer/lib.txt
 
 # Command to start the python script
 CMD [ "python3", "consumer-dynamodb.py" ]
