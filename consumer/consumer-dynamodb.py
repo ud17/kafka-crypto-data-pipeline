@@ -29,7 +29,7 @@ def connect_to_database():
         )
     print('Connected to Dynamodb.')
     table = dynamodb.Table('coins')
-    print('Table status: ' + table.table_status)
+    print(f"Table status: {table.table_status}")
     return table
 
 def consume_and_store(consumer, table):
