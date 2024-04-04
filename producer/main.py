@@ -23,7 +23,7 @@ def fetch_crypto_prices():
         "sort": "rank",
         "order": "ascending",
         "offset": 0,
-        "limit": 100,
+        "limit": 1,
         "meta": True
     })
 

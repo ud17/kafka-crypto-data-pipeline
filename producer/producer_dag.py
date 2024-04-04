@@ -19,7 +19,7 @@ dag = DAG(
     'fetch_crypto_prices',
     default_args=default_args,
     description='DAG to automate real-time crypto prices ingestion pipeline',
-    schedule_interval=timedelta(days=1)
+    schedule_interval=timedelta(minutes=1) # run every minute
 )
 
 run_etl = DockerOperator(
