@@ -23,7 +23,7 @@ def fetch_crypto_prices():
         "sort": "rank",
         "order": "ascending",
         "offset": 0,
-        "limit": 20,
+        "limit": 100,
         "meta": True
     })
 
@@ -41,4 +41,3 @@ def fetch_crypto_prices():
         message_value = json.dumps(coin).encode('utf-8')
         producer.send(kafka_topic, value=message_value)
     print('END')
-        
