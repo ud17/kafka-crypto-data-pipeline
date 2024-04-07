@@ -19,12 +19,12 @@ dag = DAG(
     default_args=default_args,
     description='DAG to automate real-time crypto prices ingestion pipeline',
     schedule_interval=timedelta(minutes=1), # run every minute
-    start_date= datetime(2024, 4, 4)
 )
 
 run_etl = DockerOperator(
     task_id = 'crypto_price_ingestion_pipeline',
     image = 'producer:airflow',
+    network_mode='host',
     command = 'python3 main.py',
     api_version= 'auto',
     auto_remove = True,
