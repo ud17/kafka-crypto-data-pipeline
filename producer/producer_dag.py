@@ -8,6 +8,7 @@ from datetime import timedelta
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
+    'start_date': datetime(2024, 4, 6),
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -17,8 +18,9 @@ default_args = {
 dag = DAG(
     'fetch_crypto_prices',
     default_args=default_args,
+    max_active_runs=1,
     description='DAG to automate real-time crypto prices ingestion pipeline',
-    schedule_interval=timedelta(minutes=1), # run every minute
+    schedule_interval= "*/1 * * * *"# timedelta(minutes=1), # run every minute
 )
 
 run_etl = DockerOperator(
