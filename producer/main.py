@@ -19,7 +19,7 @@ def fetch_crypto_prices():
         "sort": "rank",
         "order": "ascending",
         "offset": 0,
-        "limit": 20,
+        "limit": 1,
         "meta": True
     })
 
@@ -33,15 +33,13 @@ def fetch_crypto_prices():
     return response.json()
 
 def produce_to_kafka(producer, topic):
-    while True:
-        print('START')
-        crypto_prices = fetch_crypto_prices()
-        # Serialize data to bytes (assuming it's JSON)
-        for coin in crypto_prices:
-            message_value = json.dumps(coin).encode('utf-8')
-            producer.send(topic, value=message_value)
-        print('END')
-        time.sleep(15)  # Fetch data every 15 seconds
+    print('START')
+    crypto_prices = fetch_crypto_prices()
+    # Serialize data to bytes (assuming it's JSON)
+    for coin in crypto_prices:
+        message_value = json.dumps(coin).encode('utf-8')
+        producer.send(topic, value=message_value)
+    print('END')
 
 def main():
     kafka_bootstrap_servers = KAFKA_HOST
