@@ -28,9 +28,13 @@ def upload_file(document, s3):
 
     try:
         filename = f"{document['code']}_{document['id']}.json"
+
+        # Serialize the JSON object into a JSON string
+        json_str = json.dumps(document)
+
         # Write the JSON string to a file
         with open(filename, 'w') as json_file:
-            json_file.write()
+            json_file.write(json_str)
 
         s3.put_object(S3_BUCKET, filename, json_file) # s3_client.put_object(bucket, file_name, content)
         print(f'{filename} uploaded.')
