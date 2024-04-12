@@ -30,13 +30,9 @@ def upload_file(document, s3):
         filename = f"{document['code']}_{document['id']}.json"
 
         # Serialize the JSON object into a JSON string
-        json_str = json.dumps(document)
+        file_str = json.dumps(document)
 
-        # Write the JSON string to a file
-        with open(filename, 'w') as json_file:
-            json_file.write(json_str)
-
-        s3.put_object(S3_BUCKET, filename, json_file) # s3_client.put_object(bucket, file_name, content)
+        s3.put_object(Bucket=S3_BUCKET, Key=filename, Body=file_str) # s3_client.put_object(bucket, file_name, content)
         print(f'{filename} uploaded.')
     except ClientError as e:
         logging.error(e)
@@ -44,7 +40,7 @@ def upload_file(document, s3):
 def consume_and_store(consumer, s3_client):
 
     for message in consumer:
-        crypto = json.loads(message.value.decode('utf-8'), parse_float=Decimal)
+        crypto = json.loads(message.value.decode('utf-8'))
 
         # generate id
         uuid_coin = str(uuid.uuid4())
