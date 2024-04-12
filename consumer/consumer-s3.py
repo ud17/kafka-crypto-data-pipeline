@@ -33,6 +33,7 @@ def upload_file(document, s3):
             json_file.write()
 
         s3.put_object(S3_BUCKET, filename, json_file) # s3_client.put_object(bucket, file_name, content)
+        print(f'{filename} uploaded.')
     except ClientError as e:
         logging.error(e)
 
@@ -49,6 +50,7 @@ def consume_and_store(consumer, s3_client):
         timestamp = datetime.now().isoformat()
         crypto['timestamp'] = timestamp
 
+        print(f"{crypto['name']} received.")
         upload_file(crypto, s3_client)
 
 
@@ -61,6 +63,7 @@ def main():
     try:
         client = connect_to_s3()
         consume_and_store(consumer, client)
+        print('Consumer running.')
     except KeyboardInterrupt:
         consumer.close()
 
