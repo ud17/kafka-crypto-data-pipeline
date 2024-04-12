@@ -14,4 +14,4 @@ WORKDIR /consumer
 RUN pip3 install --no-cache-dir -r /consumer/lib.txt
 
 # Command to start the python script
-CMD [ "python3", "consumer-dynamodb.py" ]
+CMD [ "python3", "consumer-s3.py" ]
