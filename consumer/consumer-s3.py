@@ -31,12 +31,13 @@ def upload_file(document, s3):
 
     try:
         filename = f"{document['code']}_{document['id']}.json"
+        print(f'{filename}')
 
         # Serialize the JSON object into a JSON string
         file_str = json.dumps(document)
 
         s3.put_object(Bucket=S3_BUCKET, Key=filename, Body=file_str) # s3_client.put_object(bucket, file_name, content)
-        print(f'{filename} uploaded.')
+        print('File uploaded.')
     except ClientError as e:
         logging.error(e)
 
