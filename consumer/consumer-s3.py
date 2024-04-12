@@ -24,7 +24,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 def connect_to_s3():
     # s3 client
-    s3_client = boto3.client('s3', region_name='ca-central-1', aws_access_key_id=ACCESS_KEY, aws_secret_access_key=SECRET_KEY)
+    s3_client = boto3.client('s3', region_name='ca-central-1')
     return s3_client
 
 def upload_file(document, s3):
