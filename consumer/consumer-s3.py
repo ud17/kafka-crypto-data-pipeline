@@ -21,7 +21,7 @@ S3_BUCKET = os.getenv('S3_BUCKET')
 
 def connect_to_s3():
     # s3 client
-    s3_client = boto3.client('s3')
+    s3_client = boto3.client('s3', region_name='ca-central-1')
     return s3_client
 
 def upload_file(document, s3):
