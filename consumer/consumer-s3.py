@@ -37,7 +37,7 @@ def upload_file(document, s3):
         file_str = json.dumps(document)
 
         s3.put_object(Bucket=S3_BUCKET, Key=filename, Body=file_str) # s3_client.put_object(bucket, file_name, content)
-        print('File uploaded.')
+        print(f"{document['timestamp']}: upload_file: info: {filename} uploaded.")
     except ClientError as e:
         logging.error(e)
 
@@ -46,16 +46,24 @@ def consume_and_store(consumer, s3_client):
     for message in consumer:
         crypto = json.loads(message.value.decode('utf-8'))
 
-        # generate id
-        uuid_coin = str(uuid.uuid4())
-        crypto['id'] = uuid_coin
+        # ensure `crypto` is a dict
+        if isinstance(crypto, dict):
+            # generate id
+            uuid_coin = str(uuid.uuid4())
 
-        # timestamp
-        timestamp = datetime.now().isoformat()
-        crypto['timestamp'] = timestamp
+            # timestamp
+            current_time = datetime.now()
 
-        print(f"{crypto['name']} received.")
-        upload_file(crypto, s3_client)
+            # Format the date and time as "yyyy-MM-dd HH:mm:ss"
+            timestamp = current_time.strftime("%Y-%m-%d %H:%M:%S")
+
+            crypto['id'] = uuid_coin
+            crypto['timestamp'] = timestamp
+
+            print(f"{timestamp}: consume_and_store: info: {crypto['name']} received.")
+            upload_file(crypto, s3_client)
+        else:
+            print(f"consume_and_store: error: {crypto}")    
 
 
 def main():
