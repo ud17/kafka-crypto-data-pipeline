@@ -31,7 +31,7 @@ def upload_file(document, s3):
 
     try:
         filename = f"{document['code']}_{document['id']}.json"
-        print(f'{filename}')
+        print(f'upload_file: info: {filename} created.')
 
         # Serialize the JSON object into a JSON string
         file_str = json.dumps(document)
