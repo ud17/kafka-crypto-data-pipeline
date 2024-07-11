@@ -3,7 +3,6 @@ from kafka import KafkaConsumer
 from decimal import Decimal
 from botocore.exceptions import ClientError
 from datetime import datetime
-import logging
 import boto3
 import json
 import uuid
@@ -64,7 +63,7 @@ def consume_and_store(consumer, s3_client):
         crypto = json.loads(message.value.decode('utf-8'))
 
         # timestamp
-        current_time = datetime.now()
+        current_time = datetime.now().astimezone()
 
         # Format the date and time as "yyyy-MM-dd HH:mm:ss"
         timestamp = current_time.strftime("%Y-%m-%d %H:%M:%S")
@@ -81,7 +80,7 @@ def consume_and_store(consumer, s3_client):
             upload_file(crypto, s3_client)
         else:
             publish_to_sns(f'ErrorEvent: {crypto}', f"{timestamp}: `consume_and_store`")
-            print(f"consume_and_store: error: {crypto}")    
+            print(f"consume_and_store: error: {crypto}")
 
 
 def main():

@@ -8,7 +8,7 @@ from datetime import timedelta
 default_args = {
     'owner': 'airflow',
     'depends_on_past': False,
-    'start_date': datetime(2024, 4, 8, 0, 0, 0),
+    'start_date': datetime(2024, 7, 9, 0, 0, 0),
     'email_on_failure': False,
     'email_on_retry': False,
     'retries': 1,
@@ -20,7 +20,7 @@ dag = DAG(
     default_args=default_args,
     max_active_runs=1,
     description='DAG to automate real-time crypto prices ingestion pipeline',
-    schedule_interval= "*/1 * * * *", # timedelta(minutes=1), # run every minute
+    schedule_interval= "*/1 * * * *", # run every 5 minute(s)
     catchup=False,
 )
 
