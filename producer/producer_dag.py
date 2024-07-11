@@ -20,7 +20,7 @@ dag = DAG(
     default_args=default_args,
     max_active_runs=1,
     description='DAG to automate real-time crypto prices ingestion pipeline',
-    schedule_interval= "*/1 * * * *", # run every 5 minute(s)
+    schedule_interval= "*/5 * * * *", # run every 5 minute(s)
     catchup=False,
 )
 
