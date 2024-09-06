@@ -61,8 +61,10 @@ Setup and Installation
 
     bash
 
-    `git clone https://github.com/ud17/kafka-crypto-data-pipeline.git
-    cd kafka-crypto-data-pipeline`
+    ```
+    git clone https://github.com/ud17/kafka-crypto-data-pipeline.git
+    cd kafka-crypto-data-pipeline
+    ```
 
 2.  **Install Dependencies**: Install the required Python libraries:
 
@@ -74,9 +76,10 @@ Setup and Installation
 
     bash
 
-    `docker build -t producer_image:v1 .
+    ```docker build -t producer_image:v1 .
     docker build -t consumer_image:v1 .
-    docker run -d --name consumer_container consumer_image:v1`
+    docker run -d --name consumer_container consumer_image:v1
+    ```
 
     Ensure `producer` image name matches the one referenced in your Airflow DAG.
 
@@ -84,7 +87,8 @@ Setup and Installation
 
     python
 
-    `from airflow import DAG
+    ```
+    from airflow import DAG
     from airflow.operators.docker_operator import DockerOperator
     from datetime import datetime, timedelta
 
@@ -94,7 +98,8 @@ Setup and Installation
         task_id='run_producer',
         image='producer_image:v1',
         dag=dag
-    )`
+    )
+    ```
 
 5.  **Run the Pipeline**: Start the Kafka producer and consumer services by running the Docker containers:
 
